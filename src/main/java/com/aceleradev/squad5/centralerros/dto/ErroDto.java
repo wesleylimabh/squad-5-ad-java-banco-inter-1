@@ -2,7 +2,15 @@ package com.aceleradev.squad5.centralerros.dto;
 
 import com.aceleradev.squad5.centralerros.enums.AmbienteEnum;
 import com.aceleradev.squad5.centralerros.enums.LevelEnum;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ErroDto {
 
     private Long id;

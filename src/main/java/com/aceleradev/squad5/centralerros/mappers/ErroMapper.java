@@ -11,18 +11,21 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ErroMapper {
 
-    @Mappings({
-            @Mapping(source = "id", target = "id"),
-            @Mapping(source = "ambiente", target = "ambiente"),
-            @Mapping(source = "level", target = "level"),
-            @Mapping(source = "data_hora", target = "data_hora"),
-            @Mapping(source = "titulo", target = "titulo"),
-            @Mapping(source = "origem", target = "origem"),
-            @Mapping(source = "eventos", target = "eventos")
-    })
+//    @Mappings({
+//            @Mapping(source = "id", target = "id"),
+//            @Mapping(source = "ambiente", target = "ambiente"),
+//            @Mapping(source = "level", target = "level"),
+//            @Mapping(source = "data_hora", target = "data_hora"),
+//            @Mapping(source = "titulo", target = "titulo"),
+//            @Mapping(source = "origem", target = "origem"),
+//            @Mapping(source = "eventos", target = "eventos")
+//    })
+//
+//    public ErroDto map(Erro erro);
+//
+//    public List<ErroDto> map(List<Erro> erros);
 
-    public ErroDto map(Erro erro);
+        ErroDto erroToErroDto(Erro erro);
 
-    public List<ErroDto> map(List<Erro> erros);
-
+        List<ErroDto> errosToErrosDto(List<Erro> erros);
 }
