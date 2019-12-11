@@ -30,10 +30,8 @@ public class Erro {
     private Long id;
 
     @NotNull
-    @NotBlank
     private AmbienteEnum ambiente;
 
-    @NotBlank
     @NotNull
     private LevelEnum level;
 
