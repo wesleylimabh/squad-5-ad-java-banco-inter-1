@@ -43,6 +43,7 @@ public class ErroController {
     public ResponseEntity<Void> arquivarErro(@PathVariable Long id){
         Erro erro = erroServiceInterface.findById(id);
         erro.setArquivado(true);
+        erroServiceInterface.save(erro);
         return ResponseEntity.ok().build();
     }
 
