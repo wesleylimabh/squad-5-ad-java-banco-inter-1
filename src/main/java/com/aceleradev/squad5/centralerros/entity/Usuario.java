@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,7 +21,7 @@ public class Usuario {
     public static final String TABLE_NAME = "usuario";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
@@ -43,5 +40,10 @@ public class Usuario {
     @NotBlank
     @NotNull
     private String token;
+
+    public Usuario(Usuario user) {
+        this.setEmail(user.getEmail());
+        this.setSenha(user.getSenha());
+    }
 
 }
