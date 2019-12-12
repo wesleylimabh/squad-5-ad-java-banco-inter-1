@@ -1,6 +1,8 @@
 package com.aceleradev.squad5.centralerros.service.impl;
 
 import com.aceleradev.squad5.centralerros.entity.Erro;
+import com.aceleradev.squad5.centralerros.enums.AmbienteEnum;
+import com.aceleradev.squad5.centralerros.enums.LevelEnum;
 import com.aceleradev.squad5.centralerros.exceptions.ResourceNotFoundException;
 import com.aceleradev.squad5.centralerros.repository.ErroRepository;
 import com.aceleradev.squad5.centralerros.service.interfaces.ErroServiceInterface;
@@ -37,11 +39,21 @@ public class ErroServiceImpl implements ErroServiceInterface {
     @Override
     public void save(Erro erro) {
         repository.save(erro);
-
     }
 
     @Override
     public List<Erro> findAll() {
         return repository.findAllByArquivadoIsFalse();
     }
+
+    @Override
+    public List<Erro> findAllByAmbiente(AmbienteEnum ambienteEnum) {
+        return repository.findAllByAmbiente(ambienteEnum);
+    }
+
+    @Override
+    public List<Erro> findAllByLevel(LevelEnum levelEnum) {
+        return repository.findAllByLevel(levelEnum);
+    }
+
 }

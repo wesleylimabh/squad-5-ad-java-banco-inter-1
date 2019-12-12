@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @Api(tags = "Logs de erro", description = "Endpoints para gerenciamento dos logs de erros")
@@ -30,8 +31,13 @@ public class ErroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ErroDto>> buscarErros(){
+    public ResponseEntity<List<ErroDto>> buscarErros(@RequestParam(name = "Level", required = false) LevelEnum level,
+                                                     @RequestParam(name = "Ambiente", required = false) AmbienteEnum ambiente){
+
+        if (Objects.nonNull(level)) return ResponseEntity.ok(mapper.map(erroServiceInterface.findAllByLevel(level)));
+        if (Objects.nonNull(ambiente)) return ResponseEntity.ok(mapper.map(erroServiceInterface.findAllByAmbiente(ambiente)));
         return ResponseEntity.ok(mapper.map(erroServiceInterface.findAll()));
+
     }
 
     @GetMapping("/{id}")
