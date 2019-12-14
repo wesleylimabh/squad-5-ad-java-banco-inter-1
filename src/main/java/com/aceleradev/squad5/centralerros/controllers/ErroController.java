@@ -39,18 +39,24 @@ public class ErroController {
         return ResponseEntity.ok(erroServiceInterface.findById(id));
     }
 
-    @PostMapping("/arquivar/{id}")
-    public ResponseEntity<Void> arquivarErro(@PathVariable Long id){
-        Erro erro = erroServiceInterface.findById(id);
-        erro.setArquivado(true);
-        erroServiceInterface.save(erro);
+    @PostMapping("/arquivar")
+    public ResponseEntity<Void> arquivarErro(@RequestParam List<Long> ids){
+
+        ids.forEach(id -> {
+            Erro erro = erroServiceInterface.findById(id);
+            erro.setArquivado(true);
+            erroServiceInterface.save(erro);
+        });
+
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarErro(@PathVariable Long id){
-        erroServiceInterface.delete(id);
+    @DeleteMapping()
+    public ResponseEntity<Void> deletarErro(@RequestParam List<Long> ids){
+
+        ids.forEach(id ->  erroServiceInterface.delete(id));
         return ResponseEntity.ok().build();
+
     }
 
     @PostMapping
