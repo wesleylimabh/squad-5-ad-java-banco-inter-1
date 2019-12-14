@@ -5,16 +5,21 @@ import com.aceleradev.squad5.centralerros.dto.ErroFiltroDto;
 import com.aceleradev.squad5.centralerros.entity.Erro;
 import com.aceleradev.squad5.centralerros.enums.AmbienteEnum;
 import com.aceleradev.squad5.centralerros.enums.LevelEnum;
-import com.aceleradev.squad5.centralerros.mapper.ErroMapper;
 import com.aceleradev.squad5.centralerros.service.interfaces.ErroServiceInterface;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @Api(tags = "Logs de erro", description = "Endpoints para gerenciamento dos logs de erros")
@@ -29,9 +34,15 @@ public class ErroController {
         this.erroServiceInterface = erroServiceInterface;
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)", defaultValue = "0"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page.", defaultValue = "10"),
+            @ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", defaultValue = "id,desc", value = "Sorting by column")
+    })
     @GetMapping
-    public ResponseEntity<List<ErroDto>> buscarErros(ErroFiltroDto erroFiltroDto){
-        return ResponseEntity.ok(erroServiceInterface.findAll(erroFiltroDto));
+    public ResponseEntity<Page<ErroDto>> buscarErros(ErroFiltroDto erroFiltroDto,
+                                                     @ApiIgnore @PageableDefault(sort = "id", direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable){
+        return ResponseEntity.ok(erroServiceInterface.findAll(erroFiltroDto, pageable));
     }
 
     @GetMapping("/{id}")
@@ -39,18 +50,24 @@ public class ErroController {
         return ResponseEntity.ok(erroServiceInterface.findById(id));
     }
 
-    @PostMapping("/arquivar/{id}")
-    public ResponseEntity<Void> arquivarErro(@PathVariable Long id){
-        Erro erro = erroServiceInterface.findById(id);
-        erro.setArquivado(true);
-        erroServiceInterface.save(erro);
+    @PostMapping("/arquivar")
+    public ResponseEntity<Void> arquivarErro(@RequestParam List<Long> ids){
+
+        ids.forEach(id -> {
+            Erro erro = erroServiceInterface.findById(id);
+            erro.arquivar();
+            erroServiceInterface.save(erro);
+        });
+
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarErro(@PathVariable Long id){
-        erroServiceInterface.delete(id);
+    @DeleteMapping()
+    public ResponseEntity<Void> deletarErro(@RequestParam List<Long> ids){
+
+        ids.forEach(id ->  erroServiceInterface.delete(id));
         return ResponseEntity.ok().build();
+
     }
 
     @PostMapping

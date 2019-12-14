@@ -9,9 +9,9 @@ import com.aceleradev.squad5.centralerros.mapper.ErroMapper;
 import com.aceleradev.squad5.centralerros.repository.ErroRepository;
 import com.aceleradev.squad5.centralerros.service.interfaces.ErroServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ErroServiceImpl implements ErroServiceInterface {
@@ -37,50 +37,38 @@ public class ErroServiceImpl implements ErroServiceInterface {
     }
 
     @Override
-    public void arquivar(Long id) {
-        repository.findById(id).get().setArquivado(true);
-    }
-
-    @Override
     public void save(Erro erro) {
         repository.save(erro);
     }
 
     @Override
-    public List<ErroDto> findAll(ErroFiltroDto erroFiltroDto) {
+    public Page<ErroDto> findAll(ErroFiltroDto erroFiltroDto, Pageable pageable) {
 
         String filtro = erroFiltroDto.filtra();
         AmbienteEnum ambienteEnum = AmbienteEnum.buscarAmbientePorLabel(erroFiltroDto.getAmbiente());
 
         if (filtro.equals(ErroFiltroDto.FILTRO_DUPLO)){
-            return mapper.map(repository.findByDescricaoContainingAndAmbiente(erroFiltroDto.getDescricao(), ambienteEnum));
+            String filtroDescricao = erroFiltroDto.getDescricao();
+            return repository
+                    .findByDescricaoContainingAndAmbienteAndArquivadoIsFalse(filtroDescricao, ambienteEnum, pageable)
+                    .map(mapper::map);
         }
 
         if (filtro.equals(ErroFiltroDto.FILTRO_AMBIENTE)){
-            return mapper.map(repository.findAllByAmbiente(ambienteEnum));
+            return repository
+                    .findAllByAmbienteAndArquivadoIsFalse(ambienteEnum, pageable)
+                    .map(mapper::map);
         }
 
         if (filtro.equals(ErroFiltroDto.FILTRO_DESCRICAO)){
-            return mapper.map(repository.findByDescricaoContaining(erroFiltroDto.getDescricao()));
+            return repository
+                    .findByDescricaoContainingAndArquivadoIsFalse(erroFiltroDto.getDescricao(), pageable)
+                    .map(mapper::map);
         }
 
-        return mapper.map(repository.findAll());
-
-    }
-
-    @Override
-    public List<Erro> findAllByAmbiente(AmbienteEnum ambienteEnum) {
-        return repository.findAllByAmbiente(ambienteEnum);
-    }
-
-    @Override
-    public List<Erro> findByDescricao(String descricao) {
-        return repository.findByDescricaoContaining(descricao);
-    }
-
-    @Override
-    public List<Erro> findByDescricaoContainingAndAmbiente(String descricao, AmbienteEnum ambiente) {
-        return repository.findByDescricaoContainingAndAmbiente(descricao, ambiente);
+        return repository
+                .findAllByArquivadoIsFalse(pageable)
+                .map(mapper::map);
     }
 
 }

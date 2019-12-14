@@ -1,9 +1,8 @@
 package com.aceleradev.squad5.centralerros.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.aceleradev.squad5.centralerros.dto.UsuarioDto;
+import com.aceleradev.squad5.centralerros.utils.CriptografiaUtil;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = Usuario.TABLE_NAME)
 public class Usuario {
 
@@ -44,6 +44,14 @@ public class Usuario {
     public Usuario(Usuario user) {
         this.setEmail(user.getEmail());
         this.setSenha(user.getSenha());
+    }
+
+    public UsuarioDto toDto(){
+        return UsuarioDto.builder()
+                .nome(this.nome)
+                .email(this.email)
+                .senha(CriptografiaUtil.criptografa(this.senha))
+                .build();
     }
 
 }

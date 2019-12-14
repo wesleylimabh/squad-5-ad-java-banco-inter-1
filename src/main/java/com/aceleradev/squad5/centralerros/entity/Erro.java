@@ -58,4 +58,9 @@ public class Erro {
     private String coletor;
 
     private boolean arquivado = false;
+
+    public void arquivar(){
+        setArquivado(true);
+    }
+
 }
