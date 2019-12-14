@@ -48,9 +48,11 @@ public class Usuario {
 
     public UsuarioDto toDto(){
         return UsuarioDto.builder()
+                .id(this.id)
                 .nome(this.nome)
                 .email(this.email)
                 .senha(CriptografiaUtil.criptografa(this.senha))
+                .token(this.token)
                 .build();
     }
 

@@ -29,4 +29,5 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
         return repository.findUsuarioByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Email não encontrado"));
     }
 
+
 }

@@ -37,7 +37,6 @@ public class ErroServiceImpl implements ErroServiceInterface {
     @Override
     public void save(Erro erro) {
         repository.save(erro);
-
     }
 
     @Override

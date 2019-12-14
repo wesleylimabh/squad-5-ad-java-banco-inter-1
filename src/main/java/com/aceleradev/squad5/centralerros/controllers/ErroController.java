@@ -8,6 +8,7 @@ import com.aceleradev.squad5.centralerros.mapper.ErroMapper;
 import com.aceleradev.squad5.centralerros.service.interfaces.ErroServiceInterface;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Api(tags = "Logs de erro", description = "Endpoints para gerenciamento dos logs de erros")
-@RequestMapping("/erro")
+@RequestMapping("/erros")
 public class ErroController {
 
     private ErroServiceInterface erroServiceInterface;
@@ -31,12 +32,20 @@ public class ErroController {
 
     @GetMapping
     public ResponseEntity<List<ErroDto>> buscarErros(){
-        return ResponseEntity.ok(mapper.map(erroServiceInterface.findAll()));
+        try {
+            return ResponseEntity.ok(mapper.map(erroServiceInterface.findAll()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Erro> buscarErro(@PathVariable Long id){
-        return ResponseEntity.ok(erroServiceInterface.findById(id));
+        try {
+            return ResponseEntity.ok(erroServiceInterface.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PostMapping("/arquivar/{id}")
@@ -55,7 +64,6 @@ public class ErroController {
 
     @PostMapping
     public ResponseEntity<String> criarErro(@RequestBody Erro erro){
-
         erroServiceInterface.save((Erro) erro);
 
         return ResponseEntity.ok().build();
