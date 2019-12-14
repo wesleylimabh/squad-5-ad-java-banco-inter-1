@@ -2,9 +2,9 @@ package com.aceleradev.squad5.centralerros.enums;
 
 public enum LevelEnum {
 
+    DEBUG("Debug"),
     ERROR("Erro"),
-    WARNING("Warning"),
-    DEBUG("Debug");
+    WARNING("Warning");
 
     public final String label;
 

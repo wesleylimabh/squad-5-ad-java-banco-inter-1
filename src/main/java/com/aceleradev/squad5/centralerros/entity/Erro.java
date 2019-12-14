@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = Erro.TABLE_NAME)
-public class Erro implements Comparable{
+public class Erro {
 
     public static final String TABLE_NAME = "erro";
 
@@ -59,8 +59,8 @@ public class Erro implements Comparable{
 
     private boolean arquivado = false;
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
+    public void arquivar(){
+        setArquivado(true);
     }
+
 }

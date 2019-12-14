@@ -6,9 +6,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-import java.util.List;
-
-
 @Mapper(componentModel = "spring")
 public interface ErroMapper {
 
@@ -24,7 +21,5 @@ public interface ErroMapper {
     })
 
     public ErroDto map(Erro erro);
-
-    public List<ErroDto> map(List<Erro> erros);
 
 }

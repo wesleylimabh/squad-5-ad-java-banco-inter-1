@@ -1,15 +1,11 @@
 package com.aceleradev.squad5.centralerros.dto;
 
-import com.aceleradev.squad5.centralerros.enums.AmbienteEnum;
-import com.aceleradev.squad5.centralerros.service.interfaces.ErroServiceInterface;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.awt.print.Pageable;
 import java.util.Objects;
 
 @Setter
@@ -20,7 +16,6 @@ public class ErroFiltroDto {
 
     private String ambiente;
     private String descricao;
-    private String ordenacao;
 
     public static final String FILTRO_DUPLO = "FILTRO_DUPLO";
     public static final String FILTRO_AMBIENTE = "FILTRO_AMBIENTE";
@@ -44,5 +39,4 @@ public class ErroFiltroDto {
 
         return NENHUM;
     }
-
 }
