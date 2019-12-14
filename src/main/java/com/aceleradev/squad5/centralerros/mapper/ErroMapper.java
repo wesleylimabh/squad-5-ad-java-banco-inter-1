@@ -19,7 +19,8 @@ public interface ErroMapper {
             @Mapping(source = "data_hora", target = "data_hora"),
             @Mapping(source = "titulo", target = "titulo"),
             @Mapping(source = "origem", target = "origem"),
-            @Mapping(source = "eventos", target = "eventos")
+            @Mapping(source = "eventos", target = "eventos"),
+            @Mapping(source = "descricao", target = "descricao")
     })
 
     public ErroDto map(Erro erro);

@@ -20,5 +20,6 @@ public class ErroDto {
     private String titulo;
     private String origem;
     private Integer eventos;
+    private String descricao;
 
 }
