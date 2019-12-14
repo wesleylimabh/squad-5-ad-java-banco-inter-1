@@ -1,21 +1,21 @@
 package com.aceleradev.squad5.centralerros.controllers;
 
+import com.aceleradev.squad5.centralerros.dto.UsuarioDto;
 import com.aceleradev.squad5.centralerros.entity.Usuario;
 import com.aceleradev.squad5.centralerros.service.interfaces.UsuarioServiceInterface;
 import com.aceleradev.squad5.centralerros.utils.GeradorToken;
 import io.swagger.annotations.Api;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @Api(tags = "Usuario", description = "Endpoints para gerenciamento de usuários")
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     private final UsuarioServiceInterface usuarioServiceInterface;
@@ -32,21 +32,10 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/cadastro")
-    public ResponseEntity<Void> cadastro(@Valid @RequestHeader String email,
-                                         @Valid @RequestHeader String senha,
-                                         @Valid @RequestHeader String nome){
-
-        Usuario usuario = new Usuario();
-
-        usuario.setEmail(email);
-        usuario.setNome(nome);
-        usuario.setSenha(senha);
-        usuario.setToken(GeradorToken.gerarToken());
-
-        usuarioServiceInterface.save(usuario);
-
-        return ResponseEntity.ok().build();
+    @PostMapping
+    public ResponseEntity<UsuarioDto> cadastro(@RequestBody UsuarioDto usuarioDto){
+//        usuario.setToken(GeradorToken.gerarToken());
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServiceInterface.save(usuarioDto));
     }
 
 }
