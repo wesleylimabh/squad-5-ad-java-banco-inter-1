@@ -1,5 +1,6 @@
 package com.aceleradev.squad5.centralerros.service.impl;
 
+import com.aceleradev.squad5.centralerros.dto.UsuarioDto;
 import com.aceleradev.squad5.centralerros.entity.Usuario;
 import com.aceleradev.squad5.centralerros.exceptions.ResourceNotFoundException;
 import com.aceleradev.squad5.centralerros.repository.UsuarioRepository;
@@ -18,8 +19,9 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
     }
 
     @Override
-    public Usuario save(Usuario usuario) {
-        return repository.save(usuario);
+    public UsuarioDto save(UsuarioDto usuarioDto) {
+        Usuario usuario = usuarioDto.toEntity();
+        return repository.save(usuario).toDto();
     }
 
     @Override
