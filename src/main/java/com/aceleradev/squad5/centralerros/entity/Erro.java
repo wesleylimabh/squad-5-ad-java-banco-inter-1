@@ -49,6 +49,10 @@ public class Erro {
     @NotBlank
     private String origem;
 
+    @NotNull
+    @NotBlank
+    private String detalhes;
+
     private Integer eventos;
 
     private String coletor;

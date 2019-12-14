@@ -1,6 +1,7 @@
 package com.aceleradev.squad5.centralerros.controllers;
 
 import com.aceleradev.squad5.centralerros.dto.ErroDto;
+import com.aceleradev.squad5.centralerros.dto.ErroFiltroDto;
 import com.aceleradev.squad5.centralerros.entity.Erro;
 import com.aceleradev.squad5.centralerros.enums.AmbienteEnum;
 import com.aceleradev.squad5.centralerros.enums.LevelEnum;
@@ -22,22 +23,15 @@ public class ErroController {
 
     private ErroServiceInterface erroServiceInterface;
 
-    private ErroMapper mapper;
 
     @Autowired
-    public ErroController(ErroServiceInterface erroServiceInterface, ErroMapper mapper) {
+    public ErroController(ErroServiceInterface erroServiceInterface) {
         this.erroServiceInterface = erroServiceInterface;
-        this.mapper = mapper;
     }
 
     @GetMapping
-    public ResponseEntity<List<ErroDto>> buscarErros(@RequestParam(name = "Level", required = false) LevelEnum level,
-                                                     @RequestParam(name = "Ambiente", required = false) AmbienteEnum ambiente){
-
-        if (Objects.nonNull(level)) return ResponseEntity.ok(mapper.map(erroServiceInterface.findAllByLevel(level)));
-        if (Objects.nonNull(ambiente)) return ResponseEntity.ok(mapper.map(erroServiceInterface.findAllByAmbiente(ambiente)));
-        return ResponseEntity.ok(mapper.map(erroServiceInterface.findAll()));
-
+    public ResponseEntity<List<ErroDto>> buscarErros(ErroFiltroDto erroFiltroDto){
+        return ResponseEntity.ok(erroServiceInterface.findAll(erroFiltroDto));
     }
 
     @GetMapping("/{id}")
@@ -90,6 +84,5 @@ public class ErroController {
 
         return ResponseEntity.ok(levels);
     }
-
 
 }
