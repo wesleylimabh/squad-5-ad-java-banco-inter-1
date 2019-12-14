@@ -2,10 +2,7 @@ package com.aceleradev.squad5.centralerros.entity;
 
 import com.aceleradev.squad5.centralerros.enums.AmbienteEnum;
 import com.aceleradev.squad5.centralerros.enums.LevelEnum;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = Erro.TABLE_NAME)
@@ -61,6 +59,10 @@ public class Erro {
 
     public void arquivar(){
         setArquivado(true);
+    }
+
+    public void validaArquivado() {
+        if(arquivado == false) throw new RuntimeException("Arquivo ainda nao arquivado");
     }
 
 }

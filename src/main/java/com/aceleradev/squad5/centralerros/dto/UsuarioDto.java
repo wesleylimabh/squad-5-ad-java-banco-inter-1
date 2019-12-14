@@ -13,17 +13,18 @@ public class UsuarioDto {
     private Long id;
     private String nome;
     private String email;
-    private String senha;
-    private String token;
+//    private String senha;
+//    private String token;
 
-    public Usuario toEntity (){
-
-        return Usuario.builder()
-                .nome(this.nome)
-                .email(this.email)
-                .senha(CriptografiaUtil.criptografa(this.senha))
-                .token(this.token)
-                .build();
-    }
+//    public Usuario toEntity (){
+//
+//        return Usuario.builder()
+//                .id(this.id)
+//                .nome(this.nome)
+//                .email(this.email)
+////                .senha(CriptografiaUtil.criptografa(this.senha))
+////                .token(this.token)
+//                .build();
+//    }
 
 }

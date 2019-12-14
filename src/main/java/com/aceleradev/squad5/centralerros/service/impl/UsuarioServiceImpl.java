@@ -19,8 +19,8 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
     }
 
     @Override
-    public UsuarioDto save(UsuarioDto usuarioDto) {
-        Usuario usuario = usuarioDto.toEntity();
+    public UsuarioDto save(Usuario usuario) {
+        //Usuario usuario = repository.findUsuarioByEmail(usuarioDto.getEmail()).get();
         return repository.save(usuario).toDto();
     }
 

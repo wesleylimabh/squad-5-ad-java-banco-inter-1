@@ -33,9 +33,9 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDto> cadastro(@RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<UsuarioDto> cadastro(@RequestBody Usuario usuario){
 //        usuario.setToken(GeradorToken.gerarToken());
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServiceInterface.save(usuarioDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServiceInterface.save(usuario));
     }
 
 }
