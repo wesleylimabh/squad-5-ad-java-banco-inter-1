@@ -34,7 +34,10 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioDto> cadastro(@RequestBody Usuario usuario){
-//        usuario.setToken(GeradorToken.gerarToken());
+        Usuario usuarioDB = usuarioServiceInterface.findByEmail(usuario.getEmail());
+        if(usuarioDB != null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServiceInterface.save(usuario));
     }
 

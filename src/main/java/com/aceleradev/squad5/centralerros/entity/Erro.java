@@ -61,8 +61,4 @@ public class Erro {
         setArquivado(true);
     }
 
-    public void validaArquivado() {
-        if(arquivado == false) throw new RuntimeException("Arquivo ainda nao arquivado");
-    }
-
 }

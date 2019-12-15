@@ -22,12 +22,12 @@ public class ErroTest {
         Assertions.assertTrue(erro.isArquivado());
     }
 
-    @Test
-    public void deveSubirExceptionQuandoArquivadoForFalseEValidarArquivo() {
-        Erro erro = Erro.builder().arquivado(false).build();
-
-        Assertions.assertThrows(RuntimeException.class, () -> erro.validaArquivado());
-    }
+//    @Test
+//    public void deveSubirExceptionQuandoArquivadoForFalseEValidarArquivo() {
+//        Erro erro = Erro.builder().arquivado(false).build();
+//
+//        Assertions.assertThrows(RuntimeException.class, () -> erro.validaArquivado());
+//    }
 
 
 }
