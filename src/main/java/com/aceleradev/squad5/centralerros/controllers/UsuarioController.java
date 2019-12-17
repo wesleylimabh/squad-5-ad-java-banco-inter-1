@@ -32,10 +32,13 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping
-    public ResponseEntity<UsuarioDto> cadastro(@RequestBody UsuarioDto usuarioDto){
-//        usuario.setToken(GeradorToken.gerarToken());
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServiceInterface.save(usuarioDto));
+    @PostMapping("/cadastro")
+    public ResponseEntity<UsuarioDto> cadastro(@RequestBody Usuario usuario){
+        Usuario usuarioDB = usuarioServiceInterface.findByEmail(usuario.getEmail());
+        if(usuarioDB.getEmail() != null){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServiceInterface.save(usuario));
     }
 
 }
