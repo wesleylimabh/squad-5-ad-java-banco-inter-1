@@ -57,4 +57,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.POST, "/usuarios/cadastro");
     }
 
+
 }

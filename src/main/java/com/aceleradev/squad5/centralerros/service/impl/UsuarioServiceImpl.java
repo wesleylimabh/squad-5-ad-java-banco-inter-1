@@ -33,4 +33,9 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
         return repository.findUsuarioByEmail(email).orElse(new Usuario());
     }
 
+    @Override
+    public UsuarioDto findById(Long id) {
+        return repository.findById(id).get().toDto();
+    }
+
 }

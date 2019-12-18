@@ -32,6 +32,11 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<UsuarioDto> infoUser(@PathVariable String email){
+        return ResponseEntity.ok(usuarioServiceInterface.findByEmail(email).toDto());
+    }
+
     @PostMapping("/cadastro")
     public ResponseEntity<UsuarioDto> cadastro(@RequestBody Usuario usuario){
         Usuario usuarioDB = usuarioServiceInterface.findByEmail(usuario.getEmail());
