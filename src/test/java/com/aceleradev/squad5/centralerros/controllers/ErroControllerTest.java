@@ -30,6 +30,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -176,5 +179,36 @@ class ErroControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
+    }
+
+    @Test
+    public void deveArquivarErroExistente(){
+
+    }
+
+    @Test
+    public void deveDeletarErroExistente() {
+
+    }
+
+    @Test
+    public void deveBuscarAmbientes() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erros/ambientes";
+        List<String> ambientes = new ArrayList<>();
+
+        ambientes.add("Desenvolvimento");
+        ambientes.add("Producao");
+        ambientes.add("Homologacao");
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(ambientes))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
     }
 }
