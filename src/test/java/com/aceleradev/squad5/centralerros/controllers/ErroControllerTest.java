@@ -1,6 +1,7 @@
 package com.aceleradev.squad5.centralerros.controllers;
 
 import com.aceleradev.squad5.centralerros.CentralErrosApplication;
+import com.aceleradev.squad5.centralerros.dto.ErroFiltroDto;
 import com.aceleradev.squad5.centralerros.entity.Erro;
 import com.aceleradev.squad5.centralerros.enums.AmbienteEnum;
 import com.aceleradev.squad5.centralerros.enums.LevelEnum;
@@ -25,8 +26,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {CentralErrosApplication.class})
@@ -79,5 +87,147 @@ class ErroControllerTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    public void deveBuscarErrosComFiltroDuplo() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erro";
+        ErroFiltroDto erroFiltroDto = new ErroFiltroDto("Teste1","Filtro duplo");
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(erroFiltroDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
+        String result = mvcResult.getResponse().getContentAsString();
+        Erro erroCriado = (Erro) mapFromJson(result, Erro.class);
+        Assert.assertThat(erroRepository.findAll().getClass(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void deveBuscarErrosComFiltroDeAmbiente() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erro";
+        ErroFiltroDto erroFiltroDto = new ErroFiltroDto("Teste2","Filtro de ambiente");
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(erroFiltroDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
+        String result = mvcResult.getResponse().getContentAsString();
+        Erro erroCriado = (Erro) mapFromJson(result, Erro.class);
+        Assert.assertThat(erroRepository.findAll().getClass(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void deveBuscarErrosComFiltroDeDescricao() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erro";
+        ErroFiltroDto erroFiltroDto = new ErroFiltroDto("Teste3","Filtro de descrição");
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(erroFiltroDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
+        String result = mvcResult.getResponse().getContentAsString();
+        Erro erroCriado = (Erro) mapFromJson(result, Erro.class);
+        Assert.assertThat(erroRepository.findAll().getClass(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void deveBuscarErrosSemFiltro() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erro";
+        ErroFiltroDto erroFiltroDto = new ErroFiltroDto();
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(erroFiltroDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
+        String result = mvcResult.getResponse().getContentAsString();
+        Erro erroCriado = (Erro) mapFromJson(result, Erro.class);
+        Assert.assertThat(erroRepository.findAll().getClass(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void deveBuscarErroExistente() throws Exception{
+        mvc.perform( MockMvcRequestBuilders
+                .get("/erro/{id}", 1)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.Id").value(1));
+    }
+
+    @Test
+    public void deveArquivarErroExistente(){
+
+    }
+
+    @Test
+    public void deveDeletarErroExistente() {
+
+    }
+
+    @Test
+    public void deveBuscarAmbientes() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erro/ambientes";
+        List<String> ambientes = new ArrayList<>();
+
+        ambientes.add("Desenvolvimento");
+        ambientes.add("Producao");
+        ambientes.add("Homologacao");
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(ambientes))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
+    }
+
+    @Test
+    public void deveBuscarLevels() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erro/levels";
+        List<String> levels = new ArrayList<>();
+
+        levels.add("Debug");
+        levels.add("Erro");
+        levels.add("Warning");
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(levels))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
     }
 }
