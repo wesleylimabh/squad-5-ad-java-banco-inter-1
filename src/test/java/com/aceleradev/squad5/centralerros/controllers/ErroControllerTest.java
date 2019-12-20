@@ -141,4 +141,24 @@ class ErroControllerTest {
         Erro erroCriado = (Erro) mapFromJson(result, Erro.class);
         Assert.assertThat(erroRepository.findAll().getClass(), Matchers.notNullValue());
     }
+
+    @Test
+    public void deveBuscarErrosSemFiltro() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erros";
+        ErroFiltroDto erroFiltroDto = new ErroFiltroDto();
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(erroFiltroDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
+        String result = mvcResult.getResponse().getContentAsString();
+        Erro erroCriado = (Erro) mapFromJson(result, Erro.class);
+        Assert.assertThat(erroRepository.findAll().getClass(), Matchers.notNullValue());
+    }
 }
