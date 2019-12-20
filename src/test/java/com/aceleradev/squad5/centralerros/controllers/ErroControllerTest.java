@@ -211,4 +211,25 @@ class ErroControllerTest {
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals(200L, status);
     }
+
+    @Test
+    public void deveBuscarLevels() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erros/levels";
+        List<String> levels = new ArrayList<>();
+
+        levels.add("Debug");
+        levels.add("Erro");
+        levels.add("Warning");
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(levels))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
+    }
 }
