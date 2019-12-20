@@ -187,8 +187,11 @@ class ErroControllerTest {
     }
 
     @Test
-    public void deveDeletarErroExistente() {
+    public void deveDeletarErroExistente() throws Exception {
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
 
+        mvc.perform( MockMvcRequestBuilders.delete("/erros?ids=1&ids=2", 1) )
+                .andExpect(status().isNoContent());
     }
 
     @Test

@@ -67,7 +67,7 @@ public class ErroController {
     public ResponseEntity<Void> deletarErro(@RequestParam List<Long> ids){
 
         ids.forEach(id ->  erroServiceInterface.delete(id));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
 
     }
 
