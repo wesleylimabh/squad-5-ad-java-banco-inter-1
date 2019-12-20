@@ -1,6 +1,7 @@
 package com.aceleradev.squad5.centralerros.controllers;
 
 import com.aceleradev.squad5.centralerros.CentralErrosApplication;
+import com.aceleradev.squad5.centralerros.dto.ErroFiltroDto;
 import com.aceleradev.squad5.centralerros.entity.Erro;
 import com.aceleradev.squad5.centralerros.enums.AmbienteEnum;
 import com.aceleradev.squad5.centralerros.enums.LevelEnum;
@@ -41,7 +42,7 @@ class ErroControllerTest {
     @Test
     public void deveCriarNovoErro() throws Exception {
         this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
-        String uri = "/erro";
+        String uri = "/erros";
         Erro novoErro = Erro.builder()
                 .arquivado(false)
                 .level(LevelEnum.DEBUG)
@@ -79,5 +80,25 @@ class ErroControllerTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    public void deveBuscarErrosComFiltroDuplo() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        String uri = "/erros";
+        ErroFiltroDto erroFiltroDto = new ErroFiltroDto("Teste1","Filtro duplo");
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(uri)
+                .content(asJsonString(erroFiltroDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = this.mvc.perform(request).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals(200L, status);
+        String result = mvcResult.getResponse().getContentAsString();
+        Erro erroCriado = (Erro) mapFromJson(result, Erro.class);
+        Assert.assertThat(erroRepository.findAll().getClass(), Matchers.notNullValue());
     }
 }

@@ -22,13 +22,9 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
 
     @Override
     public UsuarioDto save(Usuario usuario) {
-<<<<<<< HEAD
-        //Usuario usuario = repository.findUsuarioByEmail(usuarioDto.getEmail()).get();
-=======
         usuario.setToken(GeradorToken.gerarToken());
         String passEncoded = CriptografiaUtil.criptografa(usuario.getSenha());
         usuario.setSenha(passEncoded);
->>>>>>> c4c7f4347d8dab2e17633f19ef67bcff5d978b8a
         return repository.save(usuario).toDto();
     }
 

@@ -5,6 +5,7 @@ import com.aceleradev.squad5.centralerros.utils.CriptografiaUtil;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -23,9 +24,13 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @NotNull
     private String nome;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @NotBlank
+    @NotNull
+    @Email
     private String email;
 
     @NotBlank
@@ -43,15 +48,9 @@ public class Usuario {
 
     public UsuarioDto toDto(){
         return UsuarioDto.builder()
-                .id(this.id)
                 .nome(this.nome)
                 .email(this.email)
-<<<<<<< HEAD
-//                .senha(CriptografiaUtil.criptografa(this.senha))
-//                .token(this.token)
-=======
                 .token(this.token)
->>>>>>> c4c7f4347d8dab2e17633f19ef67bcff5d978b8a
                 .build();
     }
 
