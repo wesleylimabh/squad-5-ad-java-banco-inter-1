@@ -12,7 +12,7 @@ public interface ErroServiceInterface {
 
     void delete(Long id);
 
-    void  save(Erro erro);
+    Erro save(Erro erro);
 
     Page<ErroDto> findAll(ErroFiltroDto erroFiltroDto, Pageable pageable);
 

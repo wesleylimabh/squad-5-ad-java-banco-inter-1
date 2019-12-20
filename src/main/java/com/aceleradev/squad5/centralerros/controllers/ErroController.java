@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -66,16 +67,13 @@ public class ErroController {
     public ResponseEntity<Void> deletarErro(@RequestParam List<Long> ids){
 
         ids.forEach(id ->  erroServiceInterface.delete(id));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
 
     }
 
     @PostMapping
-    public ResponseEntity<String> criarErro(@RequestBody Erro erro){
-
-        erroServiceInterface.save((Erro) erro);
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Erro> criarErro(@RequestBody Erro erro){
+        return ResponseEntity.status(HttpStatus.CREATED).body(erroServiceInterface.save(erro));
     }
 
     @GetMapping("/ambientes")
