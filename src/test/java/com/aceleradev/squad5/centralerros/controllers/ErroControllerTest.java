@@ -26,8 +26,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {CentralErrosApplication.class})
@@ -160,5 +164,17 @@ class ErroControllerTest {
         String result = mvcResult.getResponse().getContentAsString();
         Erro erroCriado = (Erro) mapFromJson(result, Erro.class);
         Assert.assertThat(erroRepository.findAll().getClass(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void deveBuscarErroExistente() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+
+        mvc.perform( MockMvcRequestBuilders
+                .get("/erros/{id}", 1)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
     }
 }
