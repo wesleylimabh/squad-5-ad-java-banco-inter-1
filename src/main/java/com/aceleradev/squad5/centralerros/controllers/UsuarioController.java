@@ -32,10 +32,22 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
+<<<<<<< HEAD
     @PostMapping
     public ResponseEntity<UsuarioDto> cadastro(@RequestBody Usuario usuario){
         Usuario usuarioDB = usuarioServiceInterface.findByEmail(usuario.getEmail());
         if(usuarioDB != null){
+=======
+    @GetMapping("/{email}")
+    public ResponseEntity<UsuarioDto> infoUser(@PathVariable String email){
+        return ResponseEntity.ok(usuarioServiceInterface.findByEmail(email).toDto());
+    }
+
+    @PostMapping("/cadastro")
+    public ResponseEntity<UsuarioDto> cadastro(@RequestBody Usuario usuario){
+        Usuario usuarioDB = usuarioServiceInterface.findByEmail(usuario.getEmail());
+        if(usuarioDB.getEmail() != null){
+>>>>>>> c4c7f4347d8dab2e17633f19ef67bcff5d978b8a
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioServiceInterface.save(usuario));

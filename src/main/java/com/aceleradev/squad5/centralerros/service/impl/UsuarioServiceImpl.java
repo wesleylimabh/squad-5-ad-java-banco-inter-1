@@ -5,6 +5,8 @@ import com.aceleradev.squad5.centralerros.entity.Usuario;
 import com.aceleradev.squad5.centralerros.exceptions.ResourceNotFoundException;
 import com.aceleradev.squad5.centralerros.repository.UsuarioRepository;
 import com.aceleradev.squad5.centralerros.service.interfaces.UsuarioServiceInterface;
+import com.aceleradev.squad5.centralerros.utils.CriptografiaUtil;
+import com.aceleradev.squad5.centralerros.utils.GeradorToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +22,24 @@ public class UsuarioServiceImpl implements UsuarioServiceInterface {
 
     @Override
     public UsuarioDto save(Usuario usuario) {
+<<<<<<< HEAD
         //Usuario usuario = repository.findUsuarioByEmail(usuarioDto.getEmail()).get();
+=======
+        usuario.setToken(GeradorToken.gerarToken());
+        String passEncoded = CriptografiaUtil.criptografa(usuario.getSenha());
+        usuario.setSenha(passEncoded);
+>>>>>>> c4c7f4347d8dab2e17633f19ef67bcff5d978b8a
         return repository.save(usuario).toDto();
     }
 
     @Override
     public Usuario findByEmail(String email) {
-        return repository.findUsuarioByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Email não encontrado"));
+        return repository.findUsuarioByEmail(email).orElse(new Usuario());
+    }
+
+    @Override
+    public UsuarioDto findById(Long id) {
+        return repository.findById(id).get().toDto();
     }
 
 }

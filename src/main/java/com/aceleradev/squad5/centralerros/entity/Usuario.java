@@ -46,8 +46,12 @@ public class Usuario {
                 .id(this.id)
                 .nome(this.nome)
                 .email(this.email)
+<<<<<<< HEAD
 //                .senha(CriptografiaUtil.criptografa(this.senha))
 //                .token(this.token)
+=======
+                .token(this.token)
+>>>>>>> c4c7f4347d8dab2e17633f19ef67bcff5d978b8a
                 .build();
     }
 

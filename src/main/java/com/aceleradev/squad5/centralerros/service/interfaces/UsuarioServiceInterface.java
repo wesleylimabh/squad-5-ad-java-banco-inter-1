@@ -9,4 +9,5 @@ public interface UsuarioServiceInterface{
 
     Usuario findByEmail(String email);
 
+    UsuarioDto findById(Long id);
 }

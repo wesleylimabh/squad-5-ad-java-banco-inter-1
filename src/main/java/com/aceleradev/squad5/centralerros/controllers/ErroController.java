@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @Api(tags = "Logs de erro", description = "Endpoints para gerenciamento dos logs de erros")
-@RequestMapping("/erro")
+@RequestMapping("/erros")
 public class ErroController {
 
     private ErroServiceInterface erroServiceInterface;

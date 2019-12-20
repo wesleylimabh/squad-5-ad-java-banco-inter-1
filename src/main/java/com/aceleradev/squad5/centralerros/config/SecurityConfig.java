@@ -3,6 +3,7 @@ package com.aceleradev.squad5.centralerros.config;
 import com.aceleradev.squad5.centralerros.service.impl.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,14 +44,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
-        http.authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
                 .anyRequest().authenticated();
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
+        web.ignoring().antMatchers(HttpMethod.OPTIONS);
+        web.ignoring().antMatchers(HttpMethod.POST, "/usuarios/cadastro");
     }
+
 
 }
