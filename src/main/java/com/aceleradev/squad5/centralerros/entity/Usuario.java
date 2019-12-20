@@ -50,7 +50,7 @@ public class Usuario {
         return UsuarioDto.builder()
                 .nome(this.nome)
                 .email(this.email)
-                .senha(CriptografiaUtil.criptografa(this.senha))
+                .token(this.token)
                 .build();
     }
 

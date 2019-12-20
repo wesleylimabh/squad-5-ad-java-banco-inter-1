@@ -5,8 +5,9 @@ import com.aceleradev.squad5.centralerros.entity.Usuario;
 
 public interface UsuarioServiceInterface{
 
-    UsuarioDto save(UsuarioDto usuarioDto);
+    UsuarioDto save(Usuario usuario);
 
     Usuario findByEmail(String email);
 
+    UsuarioDto findById(Long id);
 }
