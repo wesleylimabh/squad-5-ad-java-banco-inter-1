@@ -170,29 +170,30 @@ class ErroControllerTest {
     }
 
     @Test
-    public void deveBuscarErroExistente() throws Exception{
-        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
-
-        mvc.perform( MockMvcRequestBuilders
-                .get("/erros/{id}", 1)
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
-    }
-
-    @Test
-    public void deveArquivarErroExistente(){
-
-    }
-
-    @Test
     public void deveDeletarErroExistente() throws Exception {
         this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
 
         mvc.perform( MockMvcRequestBuilders.delete("/erros?ids=1&ids=2", 1) )
                 .andExpect(status().isNoContent());
     }
+
+
+    @Test
+    public void deveBuscarErroExistente() throws Exception{
+        this.mvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+
+        mvc.perform( MockMvcRequestBuilders
+                .get("/erros/{id}", 3)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(3));
+    }
+
+//    @Test
+//    public void deveArquivarErroExistente(){
+//
+//    }
 
     @Test
     public void deveBuscarAmbientes() throws Exception{
