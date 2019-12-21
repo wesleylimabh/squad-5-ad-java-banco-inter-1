@@ -1,0 +1,39 @@
+.container-error-detail{
+    display: flex;
+    margin-top: 70px;
+    margin-left: 30px;
+    flex-direction: column;
+}
+
+.container-error-detail button{
+    margin: 10px;
+    border: 0;
+    border-radius: 4px;
+    height: 30px;
+    width: 80px;
+    font-size: 16px;
+    background: #5b5482;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-body {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px
+}
+.container-body-title{
+
+}
+.container-describe{
+    flex: 1;
+    margin-right: 20px;
+}
+.container-body-infos{
+    margin-right: 50px;
+    text-align: center;
+    align-content: center;
+
+}
+
+

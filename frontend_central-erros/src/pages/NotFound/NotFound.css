@@ -1,0 +1,30 @@
+.notfound-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.notfound-container h1 {
+  margin-top: 10px;
+  font-size: 32px;
+  color: #999;
+  font-weight: bold;
+  align-self: center;
+  max-width: 50%;
+}
+
+.notfound-container button {
+  margin-top: 30px;
+  border: 0;
+  border-radius: 4px;
+  height: 48px;
+  width: 78px;
+  font-size: 16px;
+  background: #7800ff;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+}

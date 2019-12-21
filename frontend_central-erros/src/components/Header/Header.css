@@ -1,0 +1,28 @@
+.container-navbar {
+    background: #28283c !important;
+    justify-content: space-between;
+}
+
+.container-navbar .logo-img {
+    max-width: 20%;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .navbar-text{
+        display: none;
+    }
+  }
+
+.navbar-dark .navbar-text{
+    color:#f5f5f5;
+    font-weight: bold;
+}
+
+.dropdown .nav-item {
+    float: right;
+}
+.navbar-dark .icon-image {
+    max-width: 30%;
+}
+
